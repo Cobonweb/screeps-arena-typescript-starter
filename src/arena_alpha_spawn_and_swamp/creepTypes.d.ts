@@ -1,6 +1,7 @@
 export const enum creepWorkingStates {
   RetreivingEnergy,
   DropingOffAtSpawn,
+  AttackingSpawn,
   AttackingEnemy,
   RetreatingFromEnemy,
   Idle
@@ -8,7 +9,8 @@ export const enum creepWorkingStates {
 
 export const enum CreepRoles {
   hauler,
-  defender
+  defender,
+  sapper
 }
 
 declare module "game/prototypes" {

@@ -1,6 +1,7 @@
-import { ERR_NOT_IN_RANGE, RESOURCE_ENERGY } from "game/constants";
 import { Creep, StructureContainer, StructureSpawn } from "game/prototypes";
+import { ERR_NOT_IN_RANGE, RESOURCE_ENERGY } from "game/constants";
 import { findClosestByPath, getObjectsByPrototype } from "game/utils";
+
 import { creepWorkingStates } from "./creepTypes";
 
 export function hauler(creep: Creep) {

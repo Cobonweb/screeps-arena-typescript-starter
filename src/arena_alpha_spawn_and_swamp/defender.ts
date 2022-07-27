@@ -1,6 +1,7 @@
-import { ERR_NOT_IN_RANGE } from "game/constants";
 import { Creep, StructureSpawn } from "game/prototypes";
 import { findClosestByPath, getObjectsByPrototype, getRange } from "game/utils";
+
+import { ERR_NOT_IN_RANGE } from "game/constants";
 import { creepWorkingStates } from "./creepTypes";
 
 // Creep that stays around spawn and attacks enemy creeps that get too close.
