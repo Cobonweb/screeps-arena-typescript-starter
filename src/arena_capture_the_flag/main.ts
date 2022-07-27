@@ -1,7 +1,5 @@
-import { creepManager } from "./creepManager";
-import { spawnManager } from "./spawnManager";
+import { getTicks } from "game/utils";
 
 export function loop(): void {
-  spawnManager();
-  creepManager();
+  console.log(`The time is ${getTicks()}`);
 }
