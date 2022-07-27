@@ -1,5 +1,3 @@
-import { Visual } from "game/visual";
-
 export const enum creepWorkingStates {
   RetreivingEnergy,
   DropingOffAtSpawn,
