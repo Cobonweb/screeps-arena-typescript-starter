@@ -1,3 +1,5 @@
+import { ATTACK, BodyPartConstant, CARRY, MOVE, RANGED_ATTACK, TOUGH } from "game/constants";
+
 export const enum creepWorkingStates {
   RetreivingEnergy,
   DropingOffAtSpawn,
@@ -7,6 +9,12 @@ export const enum creepWorkingStates {
   Idle
 }
 
+export interface SpawnEntry {
+  role: CreepRoles;
+  spawnPriority: number;
+  amountToSpawn: number;
+  bodyComposition: BodyPartConstant[];
+}
 export const enum CreepRoles {
   hauler,
   defender,

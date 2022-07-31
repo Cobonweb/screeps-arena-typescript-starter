@@ -1,7 +1,8 @@
-import { ATTACK, CARRY, MOVE, RANGED_ATTACK, TOUGH, WORK } from "game/constants";
+import { ATTACK, BodyPartConstant, CARRY, MOVE, RANGED_ATTACK, TOUGH, WORK } from "game/constants";
 import { Creep, StructureSpawn } from "game/prototypes";
+import { CreepRoles, SpawnEntry } from "./creepTypes";
 
-import { CreepRoles } from "./creepTypes";
+import { creepsToSpawn } from "./gameSetup";
 import { getObjectsByPrototype } from "game/utils";
 
 export function spawnManager() {
@@ -11,35 +12,36 @@ export function spawnManager() {
   // create an inventory of all current creep roles.
   const currentCreepRoles = myCreeps.map(element => element.role);
 
-  // === Haulers ===
+  // Spawn desired creep
+  const desiredCreep = creepsToSpawn.find(x => x.role === creepRoleToSpawn(currentCreepRoles, creepsToSpawn));
+  if (desiredCreep === undefined) {
+    return;
+  }
   for (const spawn of mySpawns) {
-    if (currentCreepRoles.filter(x => x === CreepRoles.hauler).length < 2) {
-      const spawningCreep = spawn.spawnCreep([MOVE, MOVE, CARRY]).object; // returns reference to spawing creep for first tick of spawning sequence
-      if (spawningCreep !== undefined) {
-        spawningCreep.role = CreepRoles.hauler;
-      }
+    const spawningCreep = spawn.spawnCreep(desiredCreep?.bodyComposition).object;
+    if (spawningCreep !== undefined) {
+      spawningCreep.role = desiredCreep.role;
     }
   }
-  // === Defenders ===
-  for (const spawn of mySpawns) {
-    if (myCreeps.length > 1) {
-      if (currentCreepRoles.filter(x => x === CreepRoles.defender).length < 2) {
-        const spawningCreep = spawn.spawnCreep([RANGED_ATTACK, RANGED_ATTACK, TOUGH]).object; // returns reference to spawing creep for first tick of spawning sequence
-        if (spawningCreep !== undefined) {
-          spawningCreep.role = CreepRoles.defender;
-        }
-      }
+}
+
+function creepRoleToSpawn(currentRoles: CreepRoles[], requiredRoles: SpawnEntry[]) {
+  // Iterate through creepsToSpawn with priority sorterd.
+  // let creepRoleToSpawn:CreepRoles;
+  if (currentRoles === undefined) {
+    return undefined;
+  }
+  if (requiredRoles === undefined) {
+    return undefined;
+  }
+
+  requiredRoles.sort((a, b) => a.spawnPriority - b.spawnPriority);
+  for (const entry of requiredRoles) {
+    // count requested vs. current roles
+    if (currentRoles.filter(a => a === entry.role).length < entry.amountToSpawn) {
+      return entry.role;
     }
   }
-  // === Sappers ===
-  for (const spawn of mySpawns) {
-    if (myCreeps.length > 3) {
-      if (currentCreepRoles.filter(x => x === CreepRoles.sapper).length < 10) {
-        const spawningCreep = spawn.spawnCreep([MOVE, MOVE, ATTACK, TOUGH]).object; // returns reference to spawing creep for first tick of spawning sequence
-        if (spawningCreep !== undefined) {
-          spawningCreep.role = CreepRoles.sapper;
-        }
-      }
-    }
-  }
+
+  return undefined;
 }
