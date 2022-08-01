@@ -15,9 +15,13 @@ export function hauler(creep: Creep) {
     // Harvest at closest source
     const myContainers = getObjectsByPrototype(StructureContainer);
 
-    const closestContainer = findClosestByPath(creep, myContainers);
-    if (creep.withdraw(closestContainer, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(closestContainer);
+    const closestContainerWithEnergy = findClosestByPath(
+      creep,
+      myContainers.filter(x => x.store.energy > 0)
+    );
+
+    if (creep.withdraw(closestContainerWithEnergy, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(closestContainerWithEnergy);
     }
     // Switch to dropOff state when store is full of energy
     if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {

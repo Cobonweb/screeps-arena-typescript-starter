@@ -7,13 +7,13 @@ import { CreepRoles, SpawnEntry } from "./creepTypes";
 export const creepsToSpawn: SpawnEntry[] = [
   {
     role: CreepRoles.hauler,
-    amountToSpawn: 4,
+    amountToSpawn: 1,
     spawnPriority: 1,
-    bodyComposition: [MOVE, MOVE, CARRY]
+    bodyComposition: [MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]
   },
   {
     role: CreepRoles.defender,
-    amountToSpawn: 2,
+    amountToSpawn: 0,
     spawnPriority: 2,
     bodyComposition: [RANGED_ATTACK, RANGED_ATTACK, TOUGH]
   },
@@ -21,6 +21,6 @@ export const creepsToSpawn: SpawnEntry[] = [
     role: CreepRoles.sapper,
     amountToSpawn: 10,
     spawnPriority: 3,
-    bodyComposition: [MOVE, MOVE, ATTACK, TOUGH]
+    bodyComposition: [ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE]
   }
 ];
